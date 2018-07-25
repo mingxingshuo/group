@@ -7,7 +7,7 @@ router.prefix('/group');
 router.post('/', async(ctx, next) => {
     var name = ctx.request.body.name
     var messages = await GroupModel.find({groupName: name})
-    if(!messages){
+    if(!messages || messages.length == 0){
         messages = await CategoryModel.find({categoryName: name})
     }
     ctx.body = {messages: messages}
