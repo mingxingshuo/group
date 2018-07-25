@@ -1,19 +1,22 @@
 const router = require('koa-router')()
 var GroupModel = require('../model/Group');
+var CategoryModel = require('../model/Category');
 
 router.prefix('/group');
 
 router.post('/', async(ctx, next) => {
     var name = ctx.request.body.name
-    var messages = await GroupModel.find({$or: [{groupName: name}, {categoryName: name}]})
+    var messages = await GroupModel.find({groupName: name})
+    if(!messages){
+        messages = await CategoryModel.find({categoryName: name})
+    }
     ctx.body = {messages: messages}
 })
 
 router.post('/update', async(ctx, next) => {
     var id = ctx.request.body.id;
     var message = {
-        categoryId: ctx.request.body.categoryId,
-        categoryName: ctx.request.body.name
+        categoryId: ctx.request.body.categoryId
     }
     var docs = await GroupModel.findByIdAndUpdate(id, message)
     if (docs) {

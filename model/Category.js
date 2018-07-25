@@ -4,7 +4,7 @@ var connect_url = require('../conf/proj.json').mongodb;
 var db = mongoose.createConnection(connect_url); 
 
 var CategorySchema = new Schema({
-  name: String,
+  categoryName: String,
   createAt: {
       type: Date,
       default: Date.now

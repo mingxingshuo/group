@@ -4,13 +4,13 @@ var CategoryModel = require('../model/Category');
 router.prefix('/category');
 
 router.get('/', async(ctx, next) => {
-    var messages = await CategoryModel.find().limit(20).sort({_id: -1});
+    var messages = await CategoryModel.find();
     ctx.body = {messages: messages}
 })
 
 router.post('/create', async(ctx, next) => {
     var message = {
-        name: ctx.request.body.name
+        categoryName: ctx.request.body.name
     }
     var docs = await CategoryModel.create(message);
     if (docs) {
@@ -24,7 +24,7 @@ router.post('/create', async(ctx, next) => {
 router.post('/update', async(ctx, next) => {
     var id = ctx.request.body.id;
     var message = {
-        name: ctx.request.body.name
+        categoryName: ctx.request.body.name
     }
     var docs = await CategoryModel.findByIdAndUpdate(id, message)
     if (docs) {

@@ -6,7 +6,6 @@ var db = mongoose.createConnection(connect_url);
 var GroupSchema = new Schema({
     groupName:String,
     categoryId: String,
-    categoryName:String,
     group:Array,
     createAt: {
         type: Date,
