@@ -61,10 +61,10 @@ router.get('/find', async(ctx, next) => {
 
 router.post('/create', async(ctx, next) => {
     var message = {
-        name: ctx.request.body.codes,
+        name: ctx.request.body.name,
         contents: ctx.request.body.contents,
         category: ctx.request.body.category,
-        remarks: ctx.request.body.remarks
+        remarks: ctx.request.body.remarks||""
     }
     var docs = await RuleModel.create(message);
     if (docs) {
