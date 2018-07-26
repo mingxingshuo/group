@@ -1,10 +1,17 @@
 const router = require('koa-router')()
 var CategoryModel = require('../model/Category');
+var GroupModel = require('../model/Group');
 
 router.prefix('/category');
 
 router.get('/', async(ctx, next) => {
     var messages = await CategoryModel.find();
+    ctx.body = {messages: messages}
+})
+
+router.get('/group', async(ctx, next) => {
+    var id = ctx.request.query.id;
+    var messages = await GroupModel.find({categoryId:id});
     ctx.body = {messages: messages}
 })
 

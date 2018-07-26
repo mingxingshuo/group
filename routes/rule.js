@@ -29,7 +29,7 @@ router.post('/upload', upload.single('imageFile'), async(ctx) => {
 });
 
 router.get('/', async(ctx, next) => {
-    var messages = await RuleModel.find().limit(20).sort({_id: -1});
+    var messages = await RuleModel.find();
     var data = []
     messages.forEach(function (item) {
         var category = []
@@ -41,6 +41,12 @@ router.get('/', async(ctx, next) => {
         data.push(item)
     })
     ctx.body = {messages: data}
+})
+
+router.get('/find', async(ctx, next) => {
+    var id = ctx.request.query.id;
+    var docs = await RuleModel.findById(id)
+    ctx.body = {messages: docs}
 })
 
 // router.get('/get_code', async (ctx, next) => {
