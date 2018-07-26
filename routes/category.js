@@ -11,7 +11,11 @@ router.get('/', async(ctx, next) => {
 
 router.get('/group', async(ctx, next) => {
     var id = ctx.request.query.id;
-    var messages = await GroupModel.find({categoryId:id});
+    if(id){
+        var messages = await GroupModel.find({categoryId:id});
+    }else{
+        var messages = await GroupModel.find();
+    }
     ctx.body = {messages: messages}
 })
 

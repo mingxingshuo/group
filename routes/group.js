@@ -25,3 +25,12 @@ router.post('/update', async(ctx, next) => {
         ctx.body = {err: '修改失败'}
     }
 })
+
+router.post('/many_update', async(ctx, next) => {
+    var categoryId = ctx.request.body.categoryId;
+    var groups = ctx.request.body.groups;
+    groups.forEach(async function(group){
+        await GroupModel.findByIdAndUpdate(group, {categoryId:categoryId})
+    })
+        ctx.body = {success: '修改成功'}
+})
