@@ -93,7 +93,7 @@ router.post('/update', async(ctx, next) => {
 
 router.get('/delete', async(ctx, next) => {
     var id = ctx.request.query.id;
-    var docs = await RuleModel.findByIdAndDelete(id)
+    var docs = await RuleModel.remove({_id:id})
     var docs1 = await RuleModel.find()
     ctx.body = {success: '删除成功', data: docs1}
 })

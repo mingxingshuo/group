@@ -47,7 +47,7 @@ router.post('/update', async(ctx, next) => {
 
 router.get('/delete', async(ctx, next) => {
     var id = ctx.request.query.id;
-    var docs = await CategoryModel.findByIdAndDelete(id)
+    var docs = await CategoryModel.remove({_id:id})
     var docs1 = await CategoryModel.find()
     ctx.body = {success: '删除成功', data: docs1}
 })
