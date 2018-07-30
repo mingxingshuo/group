@@ -4,15 +4,21 @@ var CategoryModel = require('../model/Category');
 
 router.prefix('/group');
 
-router.post('/', async(ctx, next) => {
-    var name = ctx.request.body.name
-    if(name){
-        var messages = await GroupModel.find({groupName: name})
-        if (!messages || messages.length == 0) {
-            messages = await CategoryModel.find({categoryName: name})
-        }
+router.get('/', async(ctx, next) => {
+    var id = ctx.request.query.id;
+    if(id){
+        var messages = await GroupModel.find({categoryId:id});
     }else{
-        var messages = await GroupModel.find()
+        var messages = await GroupModel.find();
+    }
+    ctx.body = {messages: messages}
+})
+
+router.post('/search', async(ctx, next) => {
+    var name = ctx.request.body.name
+    var messages = await GroupModel.find({groupName: name})
+    if (!messages || messages.length == 0) {
+        messages = await CategoryModel.find({categoryName: name})
     }
     ctx.body = {messages: messages}
 })

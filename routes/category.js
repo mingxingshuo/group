@@ -9,16 +9,6 @@ router.get('/', async(ctx, next) => {
     ctx.body = {messages: messages}
 })
 
-router.get('/group', async(ctx, next) => {
-    var id = ctx.request.query.id;
-    if(id){
-        var messages = await GroupModel.find({categoryId:id});
-    }else{
-        var messages = await GroupModel.find();
-    }
-    ctx.body = {messages: messages}
-})
-
 router.post('/create', async(ctx, next) => {
     var message = {
         categoryName: ctx.request.body.name
