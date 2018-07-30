@@ -33,12 +33,10 @@ router.get('/', async(ctx, next) => {
     var data = []
     var num = 0
 
-    // messages.forEach(function (item) {
     for(var item of messages){
         num++
         var category = []
         var flag = 0
-        // item.category.forEach(async function (categoryId) {
         for(var categoryId of item.category){
             flag++
             var res = await CategoryModel.find({_id: categoryId})
