@@ -35,7 +35,7 @@ router.get('/', async(ctx, next) => {
         var category = []
         item.category.forEach(async function (categoryId) {
             var res = await CategoryModel.find({_id: categoryId})
-            category.push(res.categoryName)
+            category.push(res[0].categoryName)
         })
         item.category = category
         data.push(item)
