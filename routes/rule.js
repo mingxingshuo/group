@@ -31,16 +31,30 @@ router.post('/upload', upload.single('imageFile'), async(ctx) => {
 router.get('/', async(ctx, next) => {
     var messages = await RuleModel.find();
     var data = []
-    messages.forEach(function (item) {
+    var num = 0
+
+    // messages.forEach(function (item) {
+    for(var item of messages){
+        num++
         var category = []
-        item.category.forEach(async function (categoryId) {
+        var flag = 0
+        // item.category.forEach(async function (categoryId) {
+        for(var categoryId of item.category){
+            flag++
             var res = await CategoryModel.find({_id: categoryId})
-            category.push(res[0].categoryName)
-        })
-        item.category = category
-        data.push(item)
-    })
-    ctx.body = {messages: data}
+            if (res[0]) {
+                category.push(res[0].categoryName)
+            }
+            console.log(flag, item.category.length)
+            if (flag == item.category.length) {
+                item.category = category
+                data.push(item)
+            }
+            if (num == messages.length) {
+                ctx.body = {messages: data}
+            }
+        }
+    }
 })
 
 router.get('/find', async(ctx, next) => {
@@ -64,7 +78,7 @@ router.post('/create', async(ctx, next) => {
         name: ctx.request.body.name,
         contents: ctx.request.body.contents,
         category: ctx.request.body.category,
-        remarks: ctx.request.body.remarks||""
+        remarks: ctx.request.body.remarks || ""
     }
     var docs = await RuleModel.create(message);
     if (docs) {
@@ -93,7 +107,7 @@ router.post('/update', async(ctx, next) => {
 
 router.get('/delete', async(ctx, next) => {
     var id = ctx.request.query.id;
-    var docs = await RuleModel.remove({_id:id})
+    var docs = await RuleModel.remove({_id: id})
     var docs1 = await RuleModel.find()
     ctx.body = {success: '删除成功', data: docs1}
 })

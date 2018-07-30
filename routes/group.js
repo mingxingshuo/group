@@ -6,9 +6,13 @@ router.prefix('/group');
 
 router.post('/', async(ctx, next) => {
     var name = ctx.request.body.name
-    var messages = await GroupModel.find({groupName: name})
-    if(!messages || messages.length == 0){
-        messages = await CategoryModel.find({categoryName: name})
+    if(name){
+        var messages = await GroupModel.find({groupName: name})
+        if (!messages || messages.length == 0) {
+            messages = await CategoryModel.find({categoryName: name})
+        }
+    }else{
+        var messages = await GroupModel.find()
     }
     ctx.body = {messages: messages}
 })
@@ -29,8 +33,8 @@ router.post('/update', async(ctx, next) => {
 router.post('/many_update', async(ctx, next) => {
     var categoryId = ctx.request.body.categoryId;
     var groups = ctx.request.body.groups;
-    groups.forEach(async function(group){
-        await GroupModel.findByIdAndUpdate(group, {categoryId:categoryId})
+    groups.forEach(async function (group) {
+        await GroupModel.findByIdAndUpdate(group, {categoryId: categoryId})
     })
-        ctx.body = {success: '修改成功'}
+    ctx.body = {success: '修改成功'}
 })
