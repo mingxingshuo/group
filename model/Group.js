@@ -6,7 +6,6 @@ var db = mongoose.createConnection(connect_url);
 var GroupSchema = new Schema({
     groupName:String,
     categoryId: String,
-    group:Array,
     createAt: {
         type: Date,
         default: Date.now
@@ -19,6 +18,6 @@ var GroupSchema = new Schema({
     timestamps: { createdAt: 'createAt', updatedAt: 'updateAt' }
 });
 
-var GroupModel = db.model('Category', GroupSchema);
+var GroupModel = db.model('Group', GroupSchema);
 
 module.exports = GroupModel;

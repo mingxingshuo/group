@@ -1,6 +1,5 @@
 const router = require('koa-router')()
 var CategoryModel = require('../model/Category');
-var GroupModel = require('../model/Group');
 
 router.prefix('/category');
 

@@ -6,11 +6,13 @@ router.prefix('/group');
 
 router.get('/', async(ctx, next) => {
     var id = ctx.request.query.id;
+    var messages
     if(id){
-        var messages = await GroupModel.find({categoryId:id});
+        messages = await GroupModel.find({categoryId:id});
     }else{
-        var messages = await GroupModel.find();
+        messages = await GroupModel.find();
     }
+    console.log(messages)
     ctx.body = {messages: messages}
 })
 
@@ -44,3 +46,5 @@ router.post('/many_update', async(ctx, next) => {
     })
     ctx.body = {success: '修改成功'}
 })
+
+module.exports = router
